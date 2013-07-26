@@ -119,6 +119,11 @@ window.intercomSettings = {
   created_at: 1234567890,
   user_hash: "2eb0827de06a5a63a068f50ec0b1c98659a383692b702997613588fc4ea02442"
 }
+/*
+The correct user hash in this case is "af37fecacfb05804749ddd216b94734c3a266ef96c5e51584c877d0a96ffb48f"
+When a user has both an email and a user_id, the user_id should be used in hashing instead of their email address. The incorrect hash used email in place of user_id.
+*/
+
 
 window.intercomSettings = {
   email: 'bob@example.com',
@@ -128,3 +133,8 @@ window.intercomSettings = {
   created_at: 1234567890,
   user_hash: "f7a429d6c2ea3fd92a0229de2ba35928255d74f66d128af53de66ed014973336"
 }
+
+/*
+The correct hash for this user is "af37fecacfb05804749ddd216b94734c3a266ef96c5e51584c877d0a96ffb48f"
+This was just a simple typo; the incorrect hash was generated because the secret_key was incorrect. It was typed in as "abc1234" instead of the correct secret_key "abc123".
+*/
