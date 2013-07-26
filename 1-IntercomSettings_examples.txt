@@ -1,0 +1,130 @@
+Intercom exists to make business more personal. As such, we pride ourselves on simple, clear, and concise communication
+with our users. For the following examples please write a response to each as if you were responding to the user directly
+explaining what they did wrong and how to fix it.
+
+// =======================
+// Broken install scripts
+// =======================
+
+// Intercom is installed using a small JS snippet placed into the users app.
+// There are a multitude of ways that users do this wrongly. Here are a few simple examples.
+
+ window.intercomSettings = {
+  email: 'joeomally@example.com',
+  name: 'Joe O'Mally',
+  app_id: 'abc1234',
+  created_at: 1234567890
+}
+
+/*
+The problem here is in how the name is written. Whatever you type between the quotes is treated as a string ie. plain old text. But the apostrophe in the name is causing some confusion. There's two ways around this, which will ultimately be treated the same way by the computer. One is to use "", double quotes instead of single quotes, in which case the code won't confuse the apostrophe as a sign of you closing the string. If you wanted to keep on using single quotes, another way around it is to escape the apostrophe by typing the backslash character(\) before the apostrophe, so it will look like this -
+  name : 'Joe O\'Mally',
+The backslash is a way to communicate that you literally want the apostrophe character in there and that you don't mean to close the string.
+*/
+
+
+
+ window.intercomSettings = {
+  email: 'bob@example.com',
+  name: 'Bob Sagget',
+  app_id: 'abc1234'
+  created_at: 1234567890
+}
+
+/*
+This is a simple mistake that happens many times and can be hard to spot. There's a comma missing after app_id: 'abc1234' so the code will throw an error since each attribute needs to be comma separated. This is especially common if you need to come back to the code to add an extra line, but then forget to add a comma to the line before. This is ultimately a personal preference, but some people might choose to do this:
+   window.intercomSettings = {
+    email: 'bob@example.com'
+    ,name: 'Bob Sagget'
+    ,app_id: 'abc1234'
+    ,created_at: 1234567890
+  }
+While it might look a little bit awkward, it does make the presence of the comma more apparant, and you know that each time you add a new line, you always start off with a comma, which might help reduce the mistake of forgetting one. The code will still error if the first line starts with a comma though, so that's still something to keep in mind.
+*/
+
+
+
+window.intercomSettings = {
+  eamil: 'bob@example.com',
+  name: 'Bob Sagget',
+  app_id: 'abc1234',
+  created_at: 1234567890,
+  profile_completed_at: 1234567890,
+}
+
+/*
+There are two mistakes here. One is a simple typo of email. The other is that there is a comma on the last attribute, the profile_completed_at which will make the code error out. In some contexts (like some browsers) it's okay to have a comma right at the end. But to make sure that the code works fine for any environment, there shouldn't be a comma at the end of the last line.
+*/
+
+// ==================
+// Could be improved
+// ==================
+
+// We can store any custom data that is entered in the intercomSettings
+// object (like nuber_of_photos for a photo sharing app). We can store
+// strings, numbers, dates (in unix timestamp format), and booleans.
+// In each of the following something can be improved (which will allow
+// the user to more effectively filter and sort based on thier custom data).
+
+window.intercomSettings = {
+  email: 'bob@example.com',
+  name: 'Bob Sagget',
+  app_id: 'abc1234',
+  created_at: 1234567890,
+  number_of_photos: "3",
+  profile_completed_at: 1234567890,
+  paid_account: true
+}
+
+/*
+The number_of_photos here is being stored as a string ie. the text form of the number 3 not the literal number 3. While it certainly is possible to store it this way if the code does post processing to convert the text version of the number to a literal number, it's probably an unnecessary extra step. The easiest way would be to store it as a number to begin with ie. just the 3 without the "".
+*/
+
+
+
+window.intercomSettings = {
+  email: 'bob@example.com',
+  name: 'Bob Sagget',
+  app_id: 'abc1234',
+  created_at: 1234567890,
+  profile_completed_at: 1234567890,
+  paid_account: "true"
+}
+
+/*
+It would be better to store paid_account as true (without the quotes) instead of "true". While it's certainly possible to write some extra code to make the current code work, the more correct way would be to have the value of paid_account be a boolean. A boolean is a type of data that can only hold two values, true or false (which is different from "true" or "false" where you're storing the literal words).
+*/
+
+
+// =================
+// Broken user_hash
+// =================
+
+// The user_hash value is used to verify that the request is coming from the correct app. It is
+// calculated by hashing a secret key (that we assign for the app) and the user's details. For users with
+// only an email address and no user_id you should use the email address to calculate the hash, in all other
+// cases (only user_id or both email and user_id) the hash is calculated using the user_id value.
+
+// Example of calculating the user hash in Ruby
+// user_hash = OpenSSL::HMAC.hexdigest("sha256", "secret_key", current_user.email)
+
+// For these, the user has calculated the user_hash incorrectly, please respond, giving the correct hash and, if
+// you can, tell the user how they messed up the calculation. The correct secret_key is "abc123" for all of them.
+
+window.intercomSettings = {
+  email: 'bob@example.com',
+  user_id: "1234",
+  name: 'Bob Sagget',
+  app_id: 'abc1234',
+  created_at: 1234567890,
+  user_hash: "2eb0827de06a5a63a068f50ec0b1c98659a383692b702997613588fc4ea02442"
+}
+
+window.intercomSettings = {
+  email: 'bob@example.com',
+  user_id: "1234",
+  name: 'Bob Sagget',
+  app_id: 'abc1234',
+  created_at: 1234567890,
+  user_hash: "f7a429d6c2ea3fd92a0229de2ba35928255d74f66d128af53de66ed014973336"
+}

@@ -1,0 +1,20 @@
+Welcome. 
+
+There are 3 parts to this technical exercise, with varying difficulty. 
+
+1. Simple User Communications
+
+Intercom exists to make business more personal. As such, we pride ourselves on simple, clear, and concise communication with our users. For the examples in the 1-IntercomSettings_examples.txt file please write a response to each code sample as if you were responding directly to the user 
+explaining what they did wrong and how to fix it.
+
+2. Understanding Code
+
+In the sample code contained in 2-Rabbit-Hole.zip, which is part of fake a Ruby on Rails application, please list the chain of methods that are called between calling ManualMessage#create and when an outbound email to a user is created. The list should take the form: Class#method_name > Class#method_name > Class#method_name
+
+3. Improving Code
+
+In the third sample, refactor.rb, again part of a fictitious Ruby on Rails application, refactor as you see fit. Bonus points for writing unit tests.
+
+To submit, simply reply to your original mail with your solutions attached. 
+
+Have fun. 
