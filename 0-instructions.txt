@@ -1,20 +1,33 @@
-Welcome. 
+Welcome.
 
-There are 3 parts to this technical exercise, with varying difficulty. 
+There are 3 parts to this technical exercise, with varying difficulty.
 
 1. Simple User Communications
 
-Intercom exists to make business more personal. As such, we pride ourselves on simple, clear, and concise communication with our users. For the examples in the 1-IntercomSettings_examples.txt file please write a response to each code sample as if you were responding directly to the user 
+Intercom exists to make business more personal. As such, we pride ourselves on simple, clear, and concise communication with our users. For the examples in the 1-IntercomSettings_examples.txt file please write a response to each code sample as if you were responding directly to the user
 explaining what they did wrong and how to fix it.
 
 2. Understanding Code
 
 In the sample code contained in 2-Rabbit-Hole.zip, which is part of fake a Ruby on Rails application, please list the chain of methods that are called between calling ManualMessage#create and when an outbound email to a user is created. The list should take the form: Class#method_name > Class#method_name > Class#method_name
 
+
+  ManualMessage#set_targeted_users_for_tests > Message#remember_if_we_went_live_during_this_save >
+  Message#changed_to_live? > MessageSender#start_sending > AutoMessage#send_message > MessageSender#notify_those_concerned > MessageSender#notify_users
+
+  and then depending on whether the if or else condition is satisfied in the MessageSender#notify_users method:
+
+  in the if case:
+  AutoMessage#send_emails > AutoMessage#send_auto_email_to_user > MessageSender#email_to which creates an OutboundEmail object.
+  in the else case:
+  AutoMessage#notify_online_users_immediately > AutoMessage#deliverable_immediately? > MessageSender#queue_websocket_notification > and then MessageSplitTest.log WebsocketNotifierWorker.perform_async
+
+
+
 3. Improving Code
 
 In the third sample, refactor.rb, again part of a fictitious Ruby on Rails application, refactor as you see fit. Bonus points for writing unit tests.
 
-To submit, simply reply to your original mail with your solutions attached. 
+To submit, simply reply to your original mail with your solutions attached.
 
-Have fun. 
+Have fun.
